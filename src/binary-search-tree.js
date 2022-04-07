@@ -6,43 +6,180 @@ const { NotImplementedError } = require('../extensions/index.js');
 * Implement simple binary search tree according to task description
 * using Node from extensions
 */
+class Node {
+  constructor(data) {
+      this.data = data;
+      this.left = null;
+      this.right = null;
+  }
+}
+
 class BinarySearchTree {
+  constructor() {
+        this.roots = null;
+        this.arrData = []
+        this.size = 0
+  }
 
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.roots
   }
 
-  add(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  getData(data) {
+    return this.arrData
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  add(data) {
+        this.arrData[this.size] = data
+        this.size++
+      if (this.roots === null) {
+          this.roots = new Node(data);
+          return this;
+      }
+
+      let current = this.roots
+      while (current) {
+
+
+          if (current.data <= data) {
+              if (current.right === null) {
+                  current.right = new Node(data);
+                  return this;
+              }
+              current = current.right;
+          }
+
+
+          
+          if (current.data > data) {
+            if (current.left === null) {
+                current.left = new Node(data);
+                return this;
+            }
+            current = current.left;
+        }
+
+
+      }
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  has(data) {
+    if (this.roots === null) {
+      return false;
+  }
+    let current = this.roots
+      while (current ) {
+
+        if (current.data <= data) {
+          if (current.data === data) {
+            return true;
+         }
+          if (current.right === null) {
+             return false;
+          }
+          current = current.right;
+      }
+
+      if (current.data > data) {
+        if (current.data === data) {
+          return true;
+       }
+        if (current.left === null) {
+            return false;
+        }
+        current = current.left;
+    }
+    
+ }
+ 
+  
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+    if (this.roots === null) {
+      return false;
+    }
+    let current = this.roots
+    while (current) {
+  
+      if (current.data <= data) {
+        if (current.data === data) {
+          return current;
+        }
+        if (current.right === null) {
+          return null;
+        }
+        current = current.right;
+      }
+  
+      if (current.data > data) {
+        if (current.data === data) {
+          return current;
+        }
+        if (current.left === null) {
+          return null;
+        }
+        current = current.left;
+      }
+    }
+  }
+  clear(count, arrData) {
+    let curNum = arrData[count]
+    this.add(curNum)
+    return this
+  }
+
+  remove(data) {
+    
+    if (this.has(data) === false) {
+        return null;
+    }this.roots = null;
+    let count = 0;
+    let size = this.size
+    let arrData = this.arrData
+    this.arrData = []
+    this.size = 0
+    while (size != count) {
+        if(data === arrData[count]) {}
+        else {this.clear(count, arrData)}
+        count++
+    }
+
+     
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
-
-  max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    if (this.roots === null) {
+        return null;
+    }
+    let current = this.roots;
+    let minValue = this.roots.data;
+    while (current.left !== null) {
+        minValue = current.left.data;
+        current = current.left;
+    }
+    return minValue;
 }
+
+
+max() {
+    if (this.roots === null) {
+        return null;
+    }
+    let current = this.roots;
+    let maxValue = this.roots.data;
+    while (current.right !== null) {
+        maxValue = current.right.data;
+        current = current.right;
+    }
+    return maxValue;
+}
+
+}
+
+
+
+
 
 module.exports = {
   BinarySearchTree
